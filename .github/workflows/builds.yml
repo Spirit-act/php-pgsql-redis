@@ -1,0 +1,131 @@
+name: Php Postgresql and Redis containers
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 * *'
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-7_4-fpm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 7.4-fpm
+          registry: docker.io
+          dockerfile: 7.4/fpm/Dockerfile
+
+  build-7_4-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 7.4-cli
+          registry: docker.io
+          dockerfile: 7.4/cli/Dockerfile
+
+  build-8_0-fpm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.0-fpm
+          registry: docker.io
+          dockerfile: 8.0/fpm/Dockerfile
+
+  build-8_0-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.0-cli
+          registry: docker.io
+          dockerfile: 8.0/cli/Dockerfile
+
+  build-8_1-fpm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+      
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.1-fpm
+          registry: docker.io
+          dockerfile: 8.1/fpm/Dockerfile
+
+  build-8_1-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.1-cli
+          registry: docker.io
+          dockerfile: 8.1/cli/Dockerfile
