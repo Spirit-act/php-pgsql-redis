@@ -3,14 +3,14 @@ name: Php Postgresql and Redis containers
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: '0 1 1 * *'
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  build-7_4-fpm:
+  build-7_4-fpm-alpine:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,11 +26,11 @@ jobs:
         name: Build & push Docker image
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
-          tags: 7.4-fpm
+          tags: 7.4-fpm, 7.4-fpm-alpine, 7.4-fpm-alpine3.15
           registry: docker.io
-          dockerfile: 7.4/fpm/Dockerfile
+          dockerfile: 7.4/alpine/fpm/Dockerfile
 
-  build-7_4-cli:
+  build-7_4-fpm-bullseye:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -46,11 +46,11 @@ jobs:
         name: Build & push Docker image
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
-          tags: 7.4-cli
+          tags: 7.4-fpm-bullseye
           registry: docker.io
-          dockerfile: 7.4/cli/Dockerfile
+          dockerfile: 7.4/bullseye/fpm/Dockerfile
 
-  build-8_0-fpm:
+  build-7_4-cli-alpine:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -66,11 +66,11 @@ jobs:
         name: Build & push Docker image
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
-          tags: 8.0-fpm
+          tags: 7.4-cli, 7.4-cli-alpine, 7.4-cli-alpine3.15
           registry: docker.io
-          dockerfile: 8.0/fpm/Dockerfile
+          dockerfile: 7.4/alpine/cli/Dockerfile
 
-  build-8_0-cli:
+  build-7_4-cli-bullseye:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -86,11 +86,91 @@ jobs:
         name: Build & push Docker image
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
-          tags: 8.0-cli
+          tags: 7.4-cli-bullseye
           registry: docker.io
-          dockerfile: 8.0/cli/Dockerfile
+          dockerfile: 7.4/bullseye/cli/Dockerfile
 
-  build-8_1-fpm:
+  build-8_0-fpm-alpine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.0-fpm, 8.0-fpm-alpine, 8.0-fpm-alpine3.15
+          registry: docker.io
+          dockerfile: 8.0/alpine/fpm/Dockerfile
+
+  build-8_0-fpm-bullseye:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.0-fpm-bullseye
+          registry: docker.io
+          dockerfile: 8.0/bullseye/fpm/Dockerfile
+
+  build-8_0-cli-alpine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.0-cli, 8.0-cli-alpine, 8.0-cli-alpine3.15
+          registry: docker.io
+          dockerfile: 8.0/alpine/cli/Dockerfile
+
+  build-8_0-cli-bullseye:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.0-cli-bullseye
+          registry: docker.io
+          dockerfile: 8.0/bullseye/cli/Dockerfile
+
+  build-8_1-fpm-alpine:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -106,11 +186,31 @@ jobs:
         name: Build & push Docker image
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
-          tags: 8.1-fpm
+          tags: 8.1-fpm, 8.1-fpm-alpine, 8.1-fpm-alpine3.15
           registry: docker.io
-          dockerfile: 8.1/fpm/Dockerfile
+          dockerfile: 8.1/alpine/fpm/Dockerfile
 
-  build-8_1-cli:
+  build-8_1-fpm-bullseye:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+      
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.1-fpm-bullseye
+          registry: docker.io
+          dockerfile: 8.1/bullseye/fpm/Dockerfile
+
+  build-8_1-cli-alpine:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -126,6 +226,26 @@ jobs:
         name: Build & push Docker image
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
-          tags: 8.1-cli
+          tags: 8.1-cli, 8.1-cli-alpine, 8.1-cli-alpine3.15
           registry: docker.io
-          dockerfile: 8.1/cli/Dockerfile
+          dockerfile: 8.1/alpine/cli/Dockerfile
+
+  build-8_1-cli-bullseye:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/php-pgsql-redis
+          tags: 8.1-cli-bullseye
+          registry: docker.io
+          dockerfile: 8.1/bullseye/cli/Dockerfile
