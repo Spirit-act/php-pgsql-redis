@@ -1,4 +1,4 @@
-FROM spiritact/php-pgsql:8.0-cli
+FROM spiritact/php-pgsql:8.0-cli-alpine3.16
 
 RUN apk add --no-cache --virtual .build-deps autoconf g++ make
 
